@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GreenFrog - Backend Home</title>
+    <th:block th:replace="fragments/layout :: styles" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <th:block th:replace="fragments/navbar :: navbar" />
+
+    <div class="container">
+        <!-- Benvenuto -->
+        <div class="mb-5 text-center">
+            <h1 class="display-6 text-success">Benvenuto su GreenFrog Backend</h1>
+            <p class="lead">Questa è la pagina principale del backend del progetto GreenFrog. Da qui puoi gestire tutte
+                le entità e le risorse del sistema.</p>
+        </div>
+
+        <!-- Informazioni sul progetto -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-6">
+                <div class="card border-success">
+                    <div class="card-header bg-success text-white text-center">
+                        Informazioni sul progetto
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                Gestione delle <span class="badge bg-success">rane</span> e dei loro dettagli: nome,
+                                colore, peso, tossicità
+                                e habitat
+                            </li>
+                            <li class="list-group-item">
+                                Gestione degli <span class="badge bg-success">habitat</span> e degli <span
+                                    class="badge bg-success">stati di
+                                    conservazione</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiche rapide -->
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3">
+                <div class="card text-center border-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Rane Totali</h5>
+                        <p class="display-6 text-success" th:text="${frogsCount}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Habitat Totali</h5>
+                        <p class="display-6 text-success" th:text="${habitatsCount}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Stati di Conservazione</h5>
+                        <p class="display-6 text-success" th:text="${statusesCount}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="fragments/layout :: scripts" />
+</body>
+
+</html>
