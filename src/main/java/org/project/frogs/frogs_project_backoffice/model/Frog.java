@@ -2,6 +2,8 @@ package org.project.frogs.frogs_project_backoffice.model;
 
 import java.util.Set;
 
+import org.hibernate.validator.constraints.URL;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,6 +46,12 @@ public class Frog {
 
     @Lob
     private String description;
+
+    private Boolean toxicity;
+
+    @URL(message = "must be a valid URL")
+    @Size(max = 500, message = "image URL link too long")
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "conservationStatus_id", nullable = false)
@@ -133,4 +141,25 @@ public class Frog {
     public void setHabitats(Set<Habitat> habitats) {
         this.habitats = habitats;
     }
+
+    public Boolean isToxicity() {
+        return this.toxicity;
+    }
+
+    public Boolean getToxicity() {
+        return this.toxicity;
+    }
+
+    public void setToxicity(Boolean toxicity) {
+        this.toxicity = toxicity;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 }
