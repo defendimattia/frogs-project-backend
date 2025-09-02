@@ -97,4 +97,9 @@ public class ConservationStatus {
         this.riskLevel = riskLevel;
     }
 
+    @Override
+    public String toString() {
+        return "(" + getIucnCode() + ") " + getDescription();
+    }
+
 }
