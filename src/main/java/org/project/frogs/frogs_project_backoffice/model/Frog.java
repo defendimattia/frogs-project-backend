@@ -37,7 +37,7 @@ public class Frog {
     private String scientificName;
 
     @NotBlank(message = "color cannot be empty")
-    @Size(min = 3, max = 50, message = "color must be at least 3 chars long")
+    @Size(min = 3, max = 50, message = "color must be min 3 and max 50 characters long")
     private String color;
 
     @NotNull(message = "average weight cannot be empty")
