@@ -2,8 +2,6 @@ package org.project.frogs.frogs_project_backoffice.model;
 
 import java.util.Set;
 
-import org.hibernate.validator.constraints.URL;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
