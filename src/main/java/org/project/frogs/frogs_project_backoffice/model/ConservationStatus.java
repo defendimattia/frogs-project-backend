@@ -39,13 +39,9 @@ public class ConservationStatus {
     private String iucnCode;
 
     @NotNull
-    @Min(value = 1, message = "risk level must be at least 1")
+    @Min(value = 0, message = "risk level must be at least 0")
     @Max(value = 5, message = "risk level cannot be greater than 5")
     private Integer riskLevel;
-
-    @NotBlank
-    @URL(message = "must be a valid URL")
-    private String referenceUrl;
 
     @OneToMany(mappedBy = "conservationStatus")
     private Set<Frog> frogs;
@@ -54,15 +50,13 @@ public class ConservationStatus {
 
     }
 
-    public ConservationStatus(Integer id, String name, String description, String iucnCode, Integer riskLevel,
-            String referenceUrl) {
+    public ConservationStatus(Integer id, String name, String description, String iucnCode, Integer riskLevel) {
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.iucnCode = iucnCode;
         this.riskLevel = riskLevel;
-        this.referenceUrl = referenceUrl;
     }
 
     public Integer getId() {
@@ -103,14 +97,6 @@ public class ConservationStatus {
 
     public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
-    }
-
-    public String getReferenceUrl() {
-        return this.referenceUrl;
-    }
-
-    public void setReferenceUrl(String referenceUrl) {
-        this.referenceUrl = referenceUrl;
     }
 
 }
