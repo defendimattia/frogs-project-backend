@@ -11,7 +11,45 @@
     <!-- Navbar -->
     <th:block th:replace="fragments/navbar :: navbar" />
 
-    
+    <!-- tabella rane -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white text-center">
+                    Elenco rane
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead class="table-success">
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">nome comune</th>
+                                <th scope="col">nome scientifico</th>
+                                <th scope="col">colore</th>
+                                <th scope="col">peso medio(g)</th>
+                                <th scope="col">tossicità</th>
+                                <th scope="col">stato di conservazione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="frog : ${frogs}" th:object="${frog}">
+                                <th scope="row" th:text="*{id}"></th>
+                                <td th:text="*{commonName}"></td>
+                                <td th:text="*{scientificName}"></td>
+                                <td th:text="*{color}"></td>
+                                <td th:text="*{averageWeight}"></td>
+                                <td th:if="*{toxicity}" th:text="Tossica"></td>
+                                <td th:unless="*{toxicity}" th:text="|Non tossica|"></td>
+                                <td th:text="*{conservationStatus}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <th:block th:replace="fragments/layout :: scripts" />
 </body>
