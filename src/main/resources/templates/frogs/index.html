@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>GreenFrog - Backend Frogs</title>
+    <title>GreenFrog - Backend Rane</title>
     <th:block th:replace="fragments/layout :: styles" />
 </head>
 
@@ -29,6 +29,8 @@
                                 <th scope="col">peso medio(g)</th>
                                 <th scope="col">tossicità</th>
                                 <th scope="col">stato di conservazione</th>
+
+                                <!-- bottoni -->
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
@@ -41,10 +43,11 @@
                                 <td th:text="*{scientificName}"></td>
                                 <td th:text="*{color}"></td>
                                 <td th:text="*{averageWeight}"></td>
-                                <td th:if="*{toxicity}" th:text="Tossica"></td>
-                                <td th:unless="*{toxicity}" th:text="|Non tossica|"></td>
+                                <td th:text="*{toxicity} ? 'Tossica' : 'Non tossica'"></td>
                                 <td th:text="*{conservationStatus}"></td>
-                                <td><a th:href="@{#}" class="btn btn-sm btn-success">dettagli</a></td>
+
+                                <!-- bottoni -->
+                                <td><a th:href="@{/frogs/} + ${frog.id}" class="btn btn-sm btn-success">dettagli</a></td>
                                 <td><a th:href="@{#}" class="btn btn-sm btn-primary">modifica</a></td>
                                 <td><a th:href="@{#}" class="btn btn-sm btn-danger">cancella</a></td>
                             </tr>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GreenFrog - Backend Dettagli Rana</title>
+    <th:block th:replace="fragments/layout :: styles" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <th:block th:replace="fragments/navbar :: navbar" />
+
+    <div class="container mt-4">
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h1 class="h3" th:text="${selectedFrog.commonName}">Nome comune</h1>
+                <p class="text-muted mb-0" th:text="${selectedFrog.scientificName}">Nome scientifico</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- colonna immagine -->
+            <div class="col-md-4 mb-3">
+                <img th:src="${selectedFrog.imageUrl}" class="img-fluid rounded" alt="Immagine rana" />
+            </div>
+
+            <!-- colonna dettagli -->
+            <div class="col-md-8">
+                <dl class="row">
+                    <dt class="col-sm-4">Colore</dt>
+                    <dd class="col-sm-8" th:text="${selectedFrog.color}"></dd>
+
+                    <dt class="col-sm-4">Peso medio (g)</dt>
+                    <dd class="col-sm-8" th:text="${selectedFrog.averageWeight}"></dd>
+
+                    <dt class="col-sm-4">Tossicità</dt>
+                    <dd class="col-sm-8" th:text="${selectedFrog.toxicity ? 'Tossica' : 'Non tossica'}"></dd>
+
+                    <dt class="col-sm-4">Habitat</dt>
+                    <dd class="col-sm-8">
+                        <span th:each="habitat, iter : ${selectedFrog.habitats}">
+                            <span th:text="${iter.last} ? ${habitat.name} : ${habitat.name} + ','"></span>
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-4">Conservazione</dt>
+                    <dd class="col-sm-8" th:text="${selectedFrog.conservationStatus.toString()}">
+                    </dd>
+
+                    <dt class="col-sm-4">Descrizione</dt>
+                    <dd class="col-sm-8" th:text="${selectedFrog.description}"></dd>
+                </dl>
+            </div>
+        </div>
+
+    </div>
+
+    <th:block th:replace="fragments/layout :: scripts" />
+</body>
+
+</html>
