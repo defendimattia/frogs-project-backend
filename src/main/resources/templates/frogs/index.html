@@ -19,7 +19,7 @@
                     Elenco rane
                 </div>
                 <div class="card-body p-0">
-                    <table class="table table-striped mb-0">
+                    <table class="table table-striped mb-0 align-middle">
                         <thead class="table-success">
                             <tr>
                                 <th scope="col">id</th>
@@ -29,6 +29,9 @@
                                 <th scope="col">peso medio(g)</th>
                                 <th scope="col">tossicità</th>
                                 <th scope="col">stato di conservazione</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +44,9 @@
                                 <td th:if="*{toxicity}" th:text="Tossica"></td>
                                 <td th:unless="*{toxicity}" th:text="|Non tossica|"></td>
                                 <td th:text="*{conservationStatus}"></td>
+                                <td><a th:href="@{#}" class="btn btn-sm btn-success">dettagli</a></td>
+                                <td><a th:href="@{#}" class="btn btn-sm btn-primary">modifica</a></td>
+                                <td><a th:href="@{#}" class="btn btn-sm btn-danger">cancella</a></td>
                             </tr>
                         </tbody>
                     </table>
