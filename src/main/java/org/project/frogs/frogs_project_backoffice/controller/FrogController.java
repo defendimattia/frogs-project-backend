@@ -87,4 +87,27 @@ public class FrogController {
         return "redirect:/frogs";
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+
+        model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
+        model.addAttribute("habitats", habitatRepository.findAll());
+
+        model.addAttribute("frog", frogRepository.findById(id).get());
+        return "frogs/create-or-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("frog") Frog formFrog, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
+            model.addAttribute("habitats", habitatRepository.findAll());
+            return "frogs/create-or-edit";
+        }
+
+        frogRepository.save(formFrog);
+        return "redirect:/frogs";
+    }
+
 }
