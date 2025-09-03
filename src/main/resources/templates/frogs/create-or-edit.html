@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isNew} ? 'Aggiungi rana' : |Modifica rana ${frog.commonName}|"></title>
+
+    <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+</head>
+
+<body>
+    <th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+
+    <div class="container my-5">
+        <h1 class="text-center" th:text="${isNew} ? 'Aggiungi rana' : |Modifica rana ${frog.commonName}|"></h1>
+        <hr>
+
+        <form id="frog-form" th:object="${frog}"
+            th:action="${isNew} ? @{/frogs/create} : @{/frogs/edit/{id}(id = *{id})}" method="post">
+
+            <div class="my-3">
+                <h4>Nome comune:</h4>
+                <input type="text" class="form-control" id="commonName" th:field="*{commonName}"
+                    th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('commonName')}" class="text-danger">
+                    <small th:errors="*{commonName}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Nome scientifico:</h4>
+                <input type="text" class="form-control" id="scientificName" th:field="*{scientificName}"
+                    th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('scientificName')}" class="text-danger">
+                    <small th:errors="*{scientificName}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Colore:</h4>
+                <input type="text" class="form-control" id="color" th:field="*{color}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('color')}" class="text-danger">
+                    <small th:errors="*{color}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Peso medio (g):</h4>
+                <input type="text" class="form-control" id="averageWeight" th:field="*{averageWeight}" placeholder="0"
+                    th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('averageWeight')}" class="text-danger">
+                    <small th:errors="*{averageWeight}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Descrizione:</h4>
+                <input type="text" class="form-control" id="description" th:field="*{description}"
+                    th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                    <small th:errors="*{description}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>URL immagine:</h4>
+                <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('imageUrl')}" class="text-danger">
+                    <small th:errors="*{imageUrl}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Stato di conservazione:</h4>
+                <select class="form-select" id="conservationStatus" th:field="*{conservationStatus}"
+                    th:errorClass="is-invalid">
+                    <option value="">Seleziona uno stato</option>
+                    <option th:each="status : ${conservationStatuses}" th:value="${status.id}" th:text="${status}">
+                    </option>
+                </select>
+
+                <div th:if="${#fields.hasErrors('conservationStatus')}" class="text-danger">
+                    <small th:errors="*{conservationStatus}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Habitat:</h4>
+
+                <div class="form-check" th:each="habitat : ${habitats}">
+                    <input class="form-check-input" type="checkbox" th:id="${habitat.id}" th:field="*{habitats}"
+                        th:errorClass="is-invalid" th:value="${habitat.id}">
+
+                    <label class="form-check-label" th:for="${habitat.id}" th:text="${habitat.name}">
+                    </label>
+                    <div th:if="${#fields.hasErrors('habitats')}" class="text-danger">
+                        <small th:errors="*{habitats}"></small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="my-3">
+                <h4>Tossicità:</h4>
+
+                <input class="form-check-input" type="radio" id="isToxic" th:field="*{toxicity}"
+                    th:errorClass="is-invalid" th:value="true">
+                <label class="form-check-label" for="isToxic">
+                    Tossica
+                </label>
+
+                <input class="form-check-input" type="radio" id="isNotToxic" th:field="*{toxicity}"
+                    th:errorClass="is-invalid" th:value="false">
+                <label class="form-check-label" for="isNotToxic">
+                    Non tossica
+                </label>
+
+                <input class="form-check-input" type="radio" id="unknown" th:field="*{toxicity}"
+                    th:errorClass="is-invalid" value="">
+                <label class="form-check-label" for="unknown">
+                    Sconosciuta
+                </label>
+
+                <div th:if="${#fields.hasErrors('toxicity')}" class="text-danger">
+                    <small th:errors="*{toxicity}"></small>
+                </div>
+            </div>
+
+            <div class="my-3 d-flex justify-content-between">
+                <input type="submit" class="btn btn-success" value="Salva">
+
+                <th:block th:if="${isNew}">
+                    <input type="reset" class="btn btn-warning" value="Azzera campi di compilazione">
+                </th:block>
+            </div>
+
+
+        </form>
+    </div>
+
+</body>
+
+</html>
