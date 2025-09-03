@@ -11,6 +11,17 @@
     <!-- Navbar -->
     <th:block th:replace="fragments/navbar :: navbar" />
 
+    <!-- barra di ricerca -->
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-8">
+            <form th:action="@{/frogs/search}" method="get" class="d-flex">
+                <input type="text" name="query" class="form-control me-2"
+                    placeholder="Cerca rana per nome comune o scientifico" th:value="${query}">
+                <button class="btn btn-success" type="submit">Cerca</button>
+            </form>
+        </div>
+    </div>
+
     <!-- tabella rane -->
     <div class="row justify-content-center mb-5">
         <div class="col-md-8">
@@ -47,9 +58,9 @@
                                 <td th:text="*{conservationStatus}"></td>
 
                                 <!-- bottoni -->
-                                <td><a th:href="@{/frogs/} + ${frog.id}" class="btn btn-sm btn-success">dettagli</a></td>
-                                <td><a th:href="@{#}" class="btn btn-sm btn-warning">modifica</a></td>
-                                <td><a th:href="@{#}" class="btn btn-sm btn-danger">cancella</a></td>
+                                <td><a th:href="@{/frogs/} + ${frog.id}" class="btn btn-sm btn-success">Dettagli</a></td>
+                                <td><a th:href="@{#}" class="btn btn-sm btn-warning">Modifica</a></td>
+                                <td><a th:href="@{#}" class="btn btn-sm btn-danger">Cancella</a></td>
                             </tr>
                         </tbody>
                     </table>
