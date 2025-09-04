@@ -41,7 +41,7 @@
                                 <th scope="col">tossicità</th>
                                 <th scope="col">stato di conservazione</th>
 
-                                <!-- bottoni -->
+                                <!-- colonne pulsanti -->
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
@@ -54,13 +54,46 @@
                                 <td th:text="*{scientificName}"></td>
                                 <td th:text="*{color}"></td>
                                 <td th:text="*{averageWeight}"></td>
-                                <td th:text="*{toxicity} ? 'Tossica' : 'Non tossica'"></td>
+                                <td th:text="*{toxicity} == null ? 'Sconosciuta' : (*{toxicity} ? 'Tossica' : 'Non tossica')"></td>
                                 <td th:text="*{conservationStatus}"></td>
 
-                                <!-- bottoni -->
-                                <td><a th:href="@{/frogs/} + ${frog.id}" class="btn btn-sm btn-success">Dettagli</a></td>
-                                <td><a th:href="@{/frogs/edit/} + ${frog.id}" class="btn btn-sm btn-warning">Modifica</a></td>
-                                <td><a th:href="@{#}" class="btn btn-sm btn-danger">Cancella</a></td>
+                                <!-- pulsanti -->
+                                <td><a th:href="@{/frogs/} + ${frog.id}" class="btn btn-sm btn-success">Dettagli</a>
+                                </td>
+                                <td><a th:href="@{/frogs/edit/} + ${frog.id}"
+                                        class="btn btn-sm btn-warning">Modifica</a></td>
+                                <td>
+                                    <!-- pulsante trigger modale -->
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=|#staticBackdrop-${frog.id}|">Elimina</button>
+
+                                    <!-- modale -->
+                                    <div class="modal fade" th:id="|staticBackdrop-${frog.id}|"
+                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Elimina</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div th:text="|Eliminare ${frog.commonName}?|" class="modal-body"></div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Annulla</button>
+
+                                                    <form action="#" th:action="@{/frogs/delete/{id}(id=${frog.id})}"
+                                                        method="post">
+                                                        <button class="btn btn-danger" type="submit"
+                                                            id="submitButton">Elimina</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
                             </tr>
                         </tbody>
                     </table>

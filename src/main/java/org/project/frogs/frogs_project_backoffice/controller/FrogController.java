@@ -110,4 +110,11 @@ public class FrogController {
         return "redirect:/frogs";
     }
 
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+
+        frogRepository.deleteById(id);
+        return "redirect:/frogs";
+    }
+
 }
