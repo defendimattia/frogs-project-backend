@@ -42,7 +42,7 @@ public class Frog {
 
     @NotNull(message = "average weight cannot be empty")
     @Positive(message = "average weight must be greater than 0")
-    private Double averageWeight;
+    private Integer averageWeight;
 
     @Lob
     private String description;
@@ -66,7 +66,7 @@ public class Frog {
     public Frog() {
     }
 
-    public Frog(Integer id, String commonName, String scientificName, String color, Double averageWeight,
+    public Frog(Integer id, String commonName, String scientificName, String color, Integer averageWeight,
             String description, ConservationStatus conservationStatus, Set<Habitat> habitats) {
         this.id = id;
         this.commonName = commonName;
@@ -110,11 +110,11 @@ public class Frog {
         this.color = color;
     }
 
-    public Double getAverageWeight() {
+    public Integer getAverageWeight() {
         return this.averageWeight;
     }
 
-    public void setAverageWeight(Double averageWeight) {
+    public void setAverageWeight(Integer averageWeight) {
         this.averageWeight = averageWeight;
     }
 

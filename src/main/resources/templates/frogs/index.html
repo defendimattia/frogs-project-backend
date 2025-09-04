@@ -35,7 +35,7 @@
                     Elenco rane
                 </div>
                 <div class="card-body p-0">
-                    <table class="table table-striped mb-0 align-middle">
+                    <table class="table table-striped mb-0 align-middle text-nowrap">
                         <thead class="table-success">
                             <tr>
                                 <th scope="col">id</th>
@@ -62,7 +62,7 @@
                                 <td
                                     th:text="*{toxicity} == null ? 'Sconosciuta' : (*{toxicity} ? 'Tossica' : 'Non tossica')">
                                 </td>
-                                <td th:text="*{conservationStatus}"></td>
+                                <td th:text="*{conservationStatus.getIucnCode()}"></td>
 
                                 <!-- pulsanti -->
                                 <td><a th:href="@{/frogs/} + ${frog.id}" class="btn btn-sm btn-success">Dettagli</a>
