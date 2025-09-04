@@ -78,6 +78,8 @@ public class FrogController {
     public String store(@Valid @ModelAttribute("frog") Frog formFrog, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+
+            model.addAttribute("isNew", true);
             model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
             model.addAttribute("habitats", habitatRepository.findAll());
             return "frogs/create-or-edit";
