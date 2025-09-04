@@ -23,20 +23,20 @@ public class ConservationStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @NotBlank (message = "name cannot bet empty")
+    @Size(min = 3, max = 50, message = "name must be min 3 and max 50 characters long")
     private String name;
 
-    @NotBlank
+    @NotBlank (message = "description cannot bet empty")
     @Size(min = 5, max = 100, message = "description must be min 5 and max 100 characters long")
     private String description;
 
-    @NotBlank
+    @NotBlank (message = "IUCN code cannot bet empty")
     @Pattern(regexp = "[A-Z]{2}")
     @Size(min = 2, max = 2, message = "IUCN code must be exactly 2 letters")
     private String iucnCode;
 
-    @NotNull
+    @NotNull (message = "risk level cannot bet empty")
     @Min(value = 0, message = "risk level must be at least 0")
     @Max(value = 5, message = "risk level cannot be greater than 5")
     private Integer riskLevel;
