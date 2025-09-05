@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isNew} ? 'Aggiungi habitat' : |Modifica '${habitat.name}'|"></title>
+
+    <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+</head>
+
+<body>
+    <th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+
+    <div class="container my-5">
+        <h1 class="text-center" th:text="${isNew} ? 'Aggiungi habitat' : |Modifica ${habitat.name}|"></h1>
+        <hr>
+
+        <form id="habitat-form" th:object="${habitat}"
+            th:action="${isNew} ? @{/habitats/create} : @{/habitats/edit/{id}(id = *{id})}" method="post">
+
+            <div class="my-3">
+                <h4>Nome:</h4>
+                <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                    <small th:errors="*{name}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Descrizione:</h4>
+                <input type="text" class="form-control" id="description" th:field="*{description}"
+                    th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                    <small th:errors="*{description}"></small>
+                </div>
+            </div>
+
+
+            <div class="my-3 d-flex justify-content-between">
+                <input type="submit" class="btn btn-success" value="Salva">
+
+                <th:block th:if="${isNew}">
+                    <input type="reset" class="btn btn-warning" value="Azzera campi di compilazione">
+                </th:block>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>
