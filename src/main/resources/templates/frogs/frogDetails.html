@@ -36,7 +36,9 @@
                     <dd class="col-sm-8" th:text="${selectedFrog.averageWeight}"></dd>
 
                     <dt class="col-sm-4">Tossicità</dt>
-                    <dd class="col-sm-8" th:text="${selectedFrog.toxicity == null ? 'Sconosciuta' : (selectedFrog.toxicity ? 'Tossica' : 'Non tossica')}"></dd>
+                    <dd class="col-sm-8"
+                        th:text="${selectedFrog.toxicity == null ? 'Sconosciuta' : (selectedFrog.toxicity ? 'Tossica' : 'Non tossica')}">
+                    </dd>
 
                     <dt class="col-sm-4">Habitat</dt>
                     <dd class="col-sm-8">
@@ -52,9 +54,35 @@
                     <dt class="col-sm-4">Descrizione</dt>
                     <dd class="col-sm-8" th:text="${selectedFrog.description}"></dd>
                 </dl>
+
+                <!-- pulsanti azioni -->
+                <div class="d-flex gap-2 mt-3 justify-content-center">
+                    <a th:href="@{/frogs/edit/} + ${selectedFrog.id}" class="btn btn-warning">Modifica</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
+                            th:attr="data-bs-target='#deleteModal'">Elimina</button>
+                </div>
+
+                <!-- modale -->
+                <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" 
+                     tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="deleteModalLabel">Elimina</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" th:text="|Eliminare '${selectedFrog.commonName}'?|"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                <form th:action="@{/frogs/delete/{id}(id=${selectedFrog.id})}" method="post">
+                                    <button class="btn btn-danger" type="submit">Elimina</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 
     <th:block th:replace="fragments/layout :: scripts" />
