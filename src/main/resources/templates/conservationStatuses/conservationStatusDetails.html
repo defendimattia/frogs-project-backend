@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GreenFrog - Backend Dettagli Stato di Conservazione</title>
+    <th:block th:replace="fragments/layout :: styles" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <th:block th:replace="~{fragments/navbar :: navbar}" />
+
+    <div class="container mt-4">
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h1 class="h3">Stato di conservazione</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-3">Tipo</dt>
+                    <dd class="col-sm-9" th:text="${selectedConservationStatus.type}"></dd>
+
+                    <dt class="col-sm-3">Descrizione</dt>
+                    <dd class="col-sm-9" th:text="${selectedConservationStatus.description}"></dd>
+
+                    <dt class="col-sm-3">Codice IUCN</dt>
+                    <dd class="col-sm-9" th:text="${selectedConservationStatus.iucnCode}"></dd>
+
+                    <dt class="col-sm-3">Livello di rischio</dt>
+                    <dd class="col-sm-9">
+                        <span th:text="${selectedConservationStatus.riskLevel}"></span>
+                        <span class="text-muted">(0 = minimo rischio, 5 = massimo rischio)</span>
+                    </dd>
+                </dl>
+                <hr>
+
+                <h2 class="h3">Rane associate:</h2>
+                <div class="fst-italic">
+
+                    <span th:if="${#lists.isEmpty(selectedConservationStatus.frogs)}">Non è presente nessuna rana con
+                        questo stato di conservazione</span>
+
+                    <ul th:unless="${#lists.isEmpty(selectedConservationStatus.frogs)}">
+                        <li th:each="frog, iter : ${selectedConservationStatus.frogs}"
+                            th:text="|${frog.commonName} (${frog.scientificName})|">
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <th:block th:replace="fragments/layout :: scripts" />
+</body>
+
+</html>
