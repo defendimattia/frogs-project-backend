@@ -2,9 +2,7 @@ package org.project.frogs.frogs_project_backoffice.controller;
 
 import org.project.frogs.frogs_project_backoffice.model.ConservationStatus;
 import org.project.frogs.frogs_project_backoffice.model.Frog;
-import org.project.frogs.frogs_project_backoffice.model.Habitat;
 import org.project.frogs.frogs_project_backoffice.repository.ConservationStatusRepository;
-import org.project.frogs.frogs_project_backoffice.repository.FrogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

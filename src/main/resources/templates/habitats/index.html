@@ -11,86 +11,92 @@
     <!-- Navbar -->
     <th:block th:replace="~{fragments/navbar :: navbar}" />
 
-    <!-- bottone aggiungi -->
     <div class="row justify-content-center mb-3">
         <div class="col-md-8">
+
+            <!-- bottone aggiungi -->
             <a th:href="@{/habitats/create}" class="btn btn-success my-3">Aggiungi nuovo habitat</a>
-        </div>
-    </div>
 
-    <!-- tabella habitats -->
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-8">
-            <div class="card border-success">
-                <div class="card-header bg-success text-white text-center">
-                    Elenco habitats
-                </div>
-                <div class="card-body p-0">
-                    <table class="table table-striped mb-0 align-middle text-nowrap">
-                        <thead class="table-success">
-                            <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">nome</th>
-                                <th scope="col">descrizione</th>
-                                <th scope="col">n° rane</th>
+            <th:block th:if="${#lists.isEmpty(habitats)}">
+                <h1 class="h3">Non è presente nessun habitat</h1>
+            </th:block>
 
-                                <!-- colonne pulsanti -->
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="habitat : ${habitats}" th:object="${habitat}">
-                                <th scope="row" th:text="*{id}"></th>
-                                <td th:text="*{name}"></td>
-                                <td th:text="*{description}"></td>
-                                <td th:text="*{#lists.size(frogs)}"></td>
+            <th:block th:unless="${#lists.isEmpty(habitats)}">
+                <!-- tabella habitats -->
+                <div class="card border-success mt-3">
+                    <div class="card-header bg-success text-white text-center">
+                        Elenco habitats
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0 align-middle text-nowrap">
+                            <thead class="table-success">
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nome</th>
+                                    <th scope="col">descrizione</th>
+                                    <th scope="col">n° rane</th>
 
-                                <!-- pulsanti -->
-                                <td>
-                                    <a th:href="@{/habitats/} + *{id}" class="btn btn-sm btn-success">Dettagli</a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/habitats/edit/} + *{id}" class="btn btn-sm btn-warning">Modifica</a>
-                                </td>
+                                    <!-- colonne pulsanti -->
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="habitat : ${habitats}" th:object="${habitat}">
+                                    <th scope="row" th:text="*{id}"></th>
+                                    <td th:text="*{name}"></td>
+                                    <td th:text="*{description}"></td>
+                                    <td th:text="*{#lists.size(frogs)}"></td>
 
-                                <td>
-                                    <!-- pulsante trigger modale -->
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        th:attr="data-bs-target=|#staticBackdrop-*{id}|">Elimina</button>
+                                    <!-- pulsanti -->
+                                    <td>
+                                        <a th:href="@{/habitats/} + *{id}" class="btn btn-sm btn-success">Dettagli</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/habitats/edit/} + *{id}"
+                                            class="btn btn-sm btn-warning">Modifica</a>
+                                    </td>
 
-                                    <!-- modale -->
-                                    <div class="modal fade" th:id="|staticBackdrop-*{id}|" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Elimina</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div th:text="|Eliminare '*{name}'?|" class="modal-body"></div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Annulla</button>
+                                    <td>
+                                        <!-- pulsante trigger modale -->
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            th:attr="data-bs-target=|#staticBackdrop-*{id}|">Elimina</button>
 
-                                                    <form th:action="@{/habitats/delete/{id}(id=*{id})}" method="post">
-                                                        <button class="btn btn-danger" type="submit"
-                                                            id="submitButton">Elimina</button>
-                                                    </form>
+                                        <!-- modale -->
+                                        <div class="modal fade" th:id="|staticBackdrop-*{id}|" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                            Elimina</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div th:text="|Eliminare '*{name}'?|" class="modal-body">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Annulla</button>
+
+                                                        <form th:action="@{/habitats/delete/{id}(id=*{id})}"
+                                                            method="post">
+                                                            <button class="btn btn-danger" type="submit"
+                                                                id="submitButton">Elimina</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
 
-                            </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 

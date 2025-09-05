@@ -11,103 +11,111 @@
     <!-- Navbar -->
     <th:block th:replace="~{fragments/navbar :: navbar}" />
 
-    <!-- barra di ricerca -->
     <div class="row justify-content-center mb-3">
         <div class="col-md-8">
 
+            <!-- bottone aggiungi -->
             <a th:href="@{/frogs/create}" class="btn btn-success my-3">Aggiungi nuova rana</a>
 
-            <form th:action="@{/frogs/search}" method="get" class="d-flex">
-                <input type="text" name="query" class="form-control me-2"
-                    placeholder="Cerca rana per nome comune o scientifico" th:value="${query}">
-                <button class="btn btn-success" type="submit">Cerca</button>
-            </form>
+            <th:block th:if="${#lists.isEmpty(frogs)}">
+                <h1 class="h3">Non è presente nessuna rana</h1>
+            </th:block>
 
-        </div>
+            <th:block th:unless="${#lists.isEmpty(frogs)}">
+                <!-- barra di ricerca -->
+                <form th:action="@{/frogs/search}" method="get" class="d-flex">
+                    <input type="text" name="query" class="form-control me-2"
+                        placeholder="Cerca rana per nome comune o scientifico" th:value="${query}">
+                    <button class="btn btn-success" type="submit">Cerca</button>
+                </form>
 
-    </div>
+                <!-- tabella rane -->
+                <div class="card border-success mt-3">
+                    <div class="card-header bg-success text-white text-center">
+                        Elenco rane
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0 align-middle text-nowrap">
+                            <thead class="table-success">
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nome comune</th>
+                                    <th scope="col">nome scientifico</th>
+                                    <th scope="col">colore</th>
+                                    <th scope="col">peso medio(g)</th>
+                                    <th scope="col">tossicità</th>
+                                    <th scope="col">stato di conservazione</th>
 
-    <!-- tabella rane -->
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-8">
-            <div class="card border-success">
-                <div class="card-header bg-success text-white text-center">
-                    Elenco rane
-                </div>
-                <div class="card-body p-0">
-                    <table class="table table-striped mb-0 align-middle text-nowrap">
-                        <thead class="table-success">
-                            <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">nome comune</th>
-                                <th scope="col">nome scientifico</th>
-                                <th scope="col">colore</th>
-                                <th scope="col">peso medio(g)</th>
-                                <th scope="col">tossicità</th>
-                                <th scope="col">stato di conservazione</th>
+                                    <!-- colonne pulsanti -->
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="frog : ${frogs}" th:object="${frog}">
+                                    <th scope="row" th:text="*{id}"></th>
+                                    <td th:text="*{commonName}"></td>
+                                    <td th:text="*{scientificName}"></td>
+                                    <td th:text="*{color}"></td>
+                                    <td th:text="*{averageWeight}"></td>
+                                    <td
+                                        th:text="*{toxicity} == null ? 'Sconosciuta' : (*{toxicity} ? 'Tossica' : 'Non tossica')">
+                                    </td>
+                                    <td th:text="*{conservationStatus.getIucnCode()}"></td>
 
-                                <!-- colonne pulsanti -->
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="frog : ${frogs}" th:object="${frog}">
-                                <th scope="row" th:text="*{id}"></th>
-                                <td th:text="*{commonName}"></td>
-                                <td th:text="*{scientificName}"></td>
-                                <td th:text="*{color}"></td>
-                                <td th:text="*{averageWeight}"></td>
-                                <td
-                                    th:text="*{toxicity} == null ? 'Sconosciuta' : (*{toxicity} ? 'Tossica' : 'Non tossica')">
-                                </td>
-                                <td th:text="*{conservationStatus.getIucnCode()}"></td>
+                                    <!-- pulsanti -->
+                                    <td>
+                                        <a th:href="@{/frogs/} + *{id}"
+                                            class="btn btn-sm btn-success">Dettagli</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/frogs/edit/} + *{id}"
+                                            class="btn btn-sm btn-warning">Modifica</a>
+                                    </td>
+                                    <td>
+                                        <!-- pulsante trigger modale -->
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            th:attr="data-bs-target=|#staticBackdrop-*{id}|">Elimina</button>
 
-                                <!-- pulsanti -->
-                                <td>
-                                    <a th:href="@{/frogs/} + *{id}" class="btn btn-sm btn-success">Dettagli</a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/frogs/edit/} + *{id}" class="btn btn-sm btn-warning">Modifica</a>
-                                </td>
-                                <td>
-                                    <!-- pulsante trigger modale -->
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        th:attr="data-bs-target=|#staticBackdrop-*{id}|">Elimina</button>
+                                        <!-- modale -->
+                                        <div class="modal fade" th:id="|staticBackdrop-*{id}|"
+                                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                            Elimina
+                                                        </h1>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div th:text="|Eliminare '*{commonName}'?|"
+                                                        class="modal-body">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Annulla</button>
 
-                                    <!-- modale -->
-                                    <div class="modal fade" th:id="|staticBackdrop-*{id}|"
-                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Elimina</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div th:text="|Eliminare '*{commonName}'?|" class="modal-body"></div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Annulla</button>
-
-                                                    <form th:action="@{/frogs/delete/{id}(id=*{id})}"
-                                                        method="post">
-                                                        <button class="btn btn-danger" type="submit"
-                                                            id="submitButton">Elimina</button>
-                                                    </form>
+                                                        <form th:action="@{/frogs/delete/{id}(id=*{id})}"
+                                                            method="post">
+                                                            <button class="btn btn-danger" type="submit"
+                                                                id="submitButton">Elimina</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
 
-                            </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            </th:block>
         </div>
     </div>
 
