@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GreenFrog - Backend Dettagli Habitat</title>
+    <th:block th:replace="fragments/layout :: styles" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <th:block th:replace="~{fragments/navbar :: navbar}" />
+
+    <div class="container mt-4">
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h1 class="h3" th:text="${selectedHabitat.name}"></h1>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h5 th:text="${selectedHabitat.description}"></h5>
+            </div>
+        </div>
+        <hr>
+
+        <h2 class="h3">Rane presenti in questo habitat:</h2>
+        <div class="fst-italic">
+
+            <span th:if="${#lists.isEmpty(selectedHabitat.frogs)}">Non è presente nessuna rana in questo habitat</span>
+
+            <ul th:unless="${#lists.isEmpty(selectedHabitat.frogs)}">
+                <li th:each="frog, iter : ${selectedHabitat.frogs}"
+                    th:text="|${frog.commonName} (${frog.scientificName})|"></li>
+            </ul>
+        </div>
+
+
+
+    </div>
+
+    <th:block th:replace="fragments/layout :: scripts" />
+</body>
+
+</html>
