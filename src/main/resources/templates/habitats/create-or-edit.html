@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title th:text="${isNew} ? 'Aggiungi habitat' : |Modifica '${habitat.name}'|"></title>
+    <title th:text="${isNew} ? 'Aggiungi habitat' : 'Modifica habitat'"></title>
 
     <th:block th:replace="~{fragments/layout :: styles}"></th:block>
 </head>
@@ -12,7 +12,7 @@
     <th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
 
     <div class="container my-5">
-        <h1 class="text-center" th:text="${isNew} ? 'Aggiungi habitat' : |Modifica ${habitat.name}|"></h1>
+        <h1 class="text-center" th:text="${isNew} ? 'Aggiungi habitat' : 'Modifica habitat'"></h1>
         <hr>
 
         <form id="habitat-form" th:object="${habitat}"

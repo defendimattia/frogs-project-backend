@@ -55,7 +55,6 @@ public class Frog {
 
     @ManyToOne
     @JoinColumn(name = "conservationStatus_id", nullable = false)
-    @NotNull(message = "a frog must have a conservation status")
     private ConservationStatus conservationStatus;
 
     @ManyToMany
@@ -67,13 +66,16 @@ public class Frog {
     }
 
     public Frog(Integer id, String commonName, String scientificName, String color, Integer averageWeight,
-            String description, ConservationStatus conservationStatus, Set<Habitat> habitats) {
+            String description, Boolean toxicity, String imageUrl, ConservationStatus conservationStatus,
+            Set<Habitat> habitats) {
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.color = color;
         this.averageWeight = averageWeight;
         this.description = description;
+        this.toxicity = toxicity;
+        this.imageUrl = imageUrl;
         this.conservationStatus = conservationStatus;
         this.habitats = habitats;
     }
@@ -162,4 +164,8 @@ public class Frog {
         this.imageUrl = imageUrl;
     }
 
+    @Override
+    public String toString() {
+        return getCommonName() + "(" + getScientificName() + ")";
+    }
 }

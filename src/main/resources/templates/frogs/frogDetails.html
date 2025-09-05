@@ -36,7 +36,7 @@
                     <dd class="col-sm-8" th:text="${selectedFrog.averageWeight}"></dd>
 
                     <dt class="col-sm-4">Tossicità</dt>
-                    <dd class="col-sm-8" th:text="${selectedFrog.toxicity ? 'Tossica' : 'Non tossica'}"></dd>
+                    <dd class="col-sm-8" th:text="${selectedFrog.toxicity == null ? 'Sconosciuta' : (selectedFrog.toxicity ? 'Tossica' : 'Non tossica')}"></dd>
 
                     <dt class="col-sm-4">Habitat</dt>
                     <dd class="col-sm-8">

@@ -48,7 +48,6 @@ public class HabitatController {
     public String create(Model model) {
 
         model.addAttribute("isNew", true);
-        model.addAttribute("frogs", frogRepository.findAll());
         model.addAttribute("habitat", new Habitat());
 
         return "habitats/create-or-edit";
@@ -83,7 +82,6 @@ public class HabitatController {
 
         if (bindingResult.hasErrors()) {
 
-            model.addAttribute("isNew", true);
             model.addAttribute("frogs", frogRepository.findAll());
             return "habitats/create-or-edit";
         }
