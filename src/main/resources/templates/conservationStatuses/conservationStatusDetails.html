@@ -47,7 +47,7 @@
 
                     <ul th:unless="${#lists.isEmpty(selectedConservationStatus.frogs)}">
                         <li th:each="frog, iter : ${selectedConservationStatus.frogs}"
-                            th:text="|${frog.commonName} (${frog.scientificName})|">
+                            th:text="${frog}">
                         </li>
                     </ul>
                 </div>
