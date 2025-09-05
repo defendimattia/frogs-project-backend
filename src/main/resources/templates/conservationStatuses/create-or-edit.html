@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isNew} ? 'Aggiungi stato di conservazione' : 'Modifica stato di conservazione'"></title>
+
+    <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+</head>
+
+<body>
+    <th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+
+    <div class="container my-5">
+        <h1 class="text-center" th:text="${isNew} ? 'Aggiungi stato di conservazione' : 'Modifica stato di conservazione'">
+        </h1>
+        <hr>
+
+        <form id="conservationStatus-form" th:object="${conservationStatus}"
+            th:action="${isNew} ? @{/conservationStatuses/create} : @{/conservationStatuses/edit/{id}(id = *{id})}"
+            method="post">
+
+            <div class="my-3">
+                <h4>Tipo:</h4>
+                <input type="text" class="form-control" id="name" th:field="*{type}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('type')}" class="text-danger">
+                    <small th:errors="*{type}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Descrizione:</h4>
+                <input type="text" class="form-control" id="description" th:field="*{description}"
+                    th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                    <small th:errors="*{description}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>IUCN code:</h4>
+                <input type="text" class="form-control" id="iucnCode" th:field="*{iucnCode}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('iucnCode')}" class="text-danger">
+                    <small th:errors="*{iucnCode}"></small>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h4>Livello di rischio:</h4>
+                <select class="form-select" id="riskLevel" th:field="*{riskLevel}" th:errorClass="is-invalid">
+                    <option value="">Seleziona un numero</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <div th:if="${#fields.hasErrors('riskLevel')}" class="text-danger">
+                    <small th:errors="*{riskLevel}"></small>
+                </div>
+            </div>
+
+            <div class="my-3 d-flex justify-content-between">
+                <input type="submit" class="btn btn-success" value="Salva">
+
+                <th:block th:if="${isNew}">
+                    <input type="reset" class="btn btn-warning" value="Azzera campi di compilazione">
+                </th:block>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>
