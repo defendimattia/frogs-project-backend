@@ -23,16 +23,16 @@ public class ConservationStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "name cannot bet empty")
-    @Size(min = 3, max = 50, message = "name must be min 3 and max 50 characters long")
-    private String name;
+    @NotBlank(message = "type cannot bet empty")
+    @Size(min = 3, max = 50, message = "type must be min 3 and max 50 characters long")
+    private String type;
 
     @NotBlank(message = "description cannot bet empty")
     @Size(min = 5, max = 100, message = "description must be min 5 and max 100 characters long")
     private String description;
 
     @NotBlank(message = "IUCN code cannot bet empty")
-    @Pattern(regexp = "[A-Z]{2}")
+    @Pattern(regexp = "[A-Z]{2}", message = "IUCN code must be 2 letters, between A and Z and must be all caps")
     @Size(min = 2, max = 2, message = "IUCN code must be exactly 2 letters")
     private String iucnCode;
 
@@ -48,10 +48,10 @@ public class ConservationStatus {
 
     }
 
-    public ConservationStatus(Integer id, String name, String description, String iucnCode, Integer riskLevel) {
+    public ConservationStatus(Integer id, String type, String description, String iucnCode, Integer riskLevel) {
 
         this.id = id;
-        this.name = name;
+        this.type = type;
         this.description = description;
         this.iucnCode = iucnCode;
         this.riskLevel = riskLevel;
@@ -65,12 +65,12 @@ public class ConservationStatus {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getType() {
+        return this.type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDescription() {
