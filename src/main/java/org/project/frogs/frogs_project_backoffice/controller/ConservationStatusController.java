@@ -1,8 +1,7 @@
 package org.project.frogs.frogs_project_backoffice.controller;
 
 import org.project.frogs.frogs_project_backoffice.model.ConservationStatus;
-import org.project.frogs.frogs_project_backoffice.model.Frog;
-import org.project.frogs.frogs_project_backoffice.repository.ConservationStatusRepository;
+import org.project.frogs.frogs_project_backoffice.service.ConservationStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ConservationStatusController {
 
     @Autowired
-    ConservationStatusRepository conservationStatusRepository;
+    ConservationStatusService conservationStatusService;
 
     @GetMapping
     public String index(Model model) {
 
-        model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
+        model.addAttribute("conservationStatuses", conservationStatusService.getAllConservationStatuses());
 
         return "conservationStatuses/index";
     }
@@ -34,8 +33,7 @@ public class ConservationStatusController {
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
 
-        ConservationStatus conservationStatusDetails = conservationStatusRepository.findById(id).get();
-        model.addAttribute("selectedConservationStatus", conservationStatusDetails);
+        model.addAttribute("selectedConservationStatus", conservationStatusService.getConservationStatusById(id));
 
         return "conservationStatuses/conservationStatusDetails";
     }
@@ -60,7 +58,7 @@ public class ConservationStatusController {
             return "conservationStatuses/create-or-edit";
         }
 
-        conservationStatusRepository.save(formConservationStatus);
+        conservationStatusService.saveConservationStatus(formConservationStatus);
 
         return "redirect:/conservationStatuses";
     }
@@ -68,7 +66,8 @@ public class ConservationStatusController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
 
-        model.addAttribute("conservationStatus", conservationStatusRepository.findById(id).get());
+        model.addAttribute("selectedConservationStatus", conservationStatusService.getConservationStatusById(id));
+
         return "conservationStatuses/create-or-edit";
     }
 
@@ -82,20 +81,15 @@ public class ConservationStatusController {
             return "conservationStatuses/create-or-edit";
         }
 
-        conservationStatusRepository.save(formConservationStatus);
+        conservationStatusService.saveConservationStatus(formConservationStatus);
+
         return "redirect:/conservationStatuses";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        ConservationStatus conservationStatusToDelete = conservationStatusRepository.findById(id).get();
-
-        for (Frog frog : conservationStatusToDelete.getFrogs()) {
-            frog.setConservationStatus(conservationStatusRepository.findById(13).get());
-        }
-
-        conservationStatusRepository.deleteById(id);
+        conservationStatusService.deleteConservationStatus(id);
 
         return "redirect:/conservationStatuses";
     }
