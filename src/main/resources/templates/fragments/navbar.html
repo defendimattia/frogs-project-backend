@@ -33,14 +33,11 @@
                     <small class="d-block">Ruolo:</small>
                     <strong th:each="role : ${#authentication.authorities}" th:text="${role.authority}"></strong>
                 </div>
-                <form th:action="@{/logout}" method="post">
+                <form th:action="@{/logout}" method="get">
                     <button type="submit" class="btn btn-light btn-sm">Logout</button>
                 </form>
             </div>
 
-            <div sec:authorize="isAnonymous()" class="text-white">
-                <a th:href="@{/login}" class="btn btn-light btn-sm">Login</a>
-            </div>
         </div>
 
     </nav>

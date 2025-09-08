@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GreenFrog Backend - Login</title>
+    <th:block th:replace="fragments/layout :: styles" />
+</head>
+
+<body class="bg-light">
+
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-success shadow">
+                <div class="card-header bg-success text-white text-center">
+                    <h4 class="mb-0">Accedi a GreenFrog Backend</h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/login}" method="post">
+                        <!-- messaggi di errore -->
+                        <div th:if="${param.error}" class="alert alert-danger text-center" role="alert">
+                            Credenziali non valide. Riprova.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success text-center" role="alert">
+                            Logout effettuato con successo.
+                        </div>
+
+                        <!-- username -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control border-success" id="username" name="username"
+                                placeholder="Inserisci il tuo username" required autofocus>
+                        </div>
+
+                        <!-- password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control border-success" id="password" name="password"
+                                placeholder="Inserisci la tua password" required>
+                        </div>
+
+                        <!-- pulsante login -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Accedi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <th:block th:replace="fragments/layout :: scripts" />
+</body>
+
+</html>
