@@ -8,15 +8,38 @@
                 <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3" th:href="@{/}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3" th:href="@{/frogs}">Rane</a>
+                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3"
+                    th:href="@{/frogs}">Rane</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3" th:href="@{/habitats}">Habitats</a>
+                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3"
+                    th:href="@{/habitats}">Habitats</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3" th:href="@{/conservationStatuses}">Stati di Conservazione</a>
+                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3"
+                    th:href="@{/conservationStatuses}">Stati di Conservazione</a>
             </li>
         </ul>
+
+        <div class="ms-auto mx-4">
+            <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-3 text-white">
+                <div>
+                    <small class="d-block">Utente:</small>
+                    <strong th:text="${#authentication.name}"></strong>
+                </div>
+                <div>
+                    <small class="d-block">Ruolo:</small>
+                    <strong th:each="role : ${#authentication.authorities}" th:text="${role.authority}"></strong>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-light btn-sm">Logout</button>
+                </form>
+            </div>
+
+            <div sec:authorize="isAnonymous()" class="text-white">
+                <a th:href="@{/login}" class="btn btn-light btn-sm">Login</a>
+            </div>
+        </div>
 
     </nav>
 </th:block>
