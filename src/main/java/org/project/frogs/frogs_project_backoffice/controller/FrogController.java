@@ -1,11 +1,9 @@
 package org.project.frogs.frogs_project_backoffice.controller;
 
-import java.util.List;
-
 import org.project.frogs.frogs_project_backoffice.model.Frog;
-import org.project.frogs.frogs_project_backoffice.repository.ConservationStatusRepository;
-import org.project.frogs.frogs_project_backoffice.repository.FrogRepository;
-import org.project.frogs.frogs_project_backoffice.repository.HabitatRepository;
+import org.project.frogs.frogs_project_backoffice.service.ConservationStatusService;
+import org.project.frogs.frogs_project_backoffice.service.FrogService;
+import org.project.frogs.frogs_project_backoffice.service.HabitatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,18 +23,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class FrogController {
 
     @Autowired
-    FrogRepository frogRepository;
+    FrogService frogService;
 
     @Autowired
-    ConservationStatusRepository conservationStatusRepository;
+    HabitatService habitatService;
 
     @Autowired
-    HabitatRepository habitatRepository;
+    ConservationStatusService conservationStatusService;
 
     @GetMapping
     public String index(Model model) {
 
-        model.addAttribute("frogs", frogRepository.findAll());
+        model.addAttribute("frogs", frogService.getAllFrogs());
 
         return "frogs/index";
     }
@@ -45,10 +43,7 @@ public class FrogController {
     @GetMapping("/search")
     public String search(@RequestParam(name = "query") String query, Model model) {
 
-        List<Frog> filteredFrogs = frogRepository
-                .findByCommonNameIgnoreCaseContainingOrScientificNameIgnoreCaseContaining(query, query);
-
-        model.addAttribute("frogs", filteredFrogs);
+        model.addAttribute("frogs", frogService.searchFrogs(query));
 
         return "frogs/index";
     }
@@ -56,9 +51,7 @@ public class FrogController {
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
 
-        Frog frogDetails = frogRepository.findById(id).get();
-
-        model.addAttribute("selectedFrog", frogDetails);
+        model.addAttribute("selectedFrog", frogService.getFrogById(id));
 
         return "frogs/frogDetails";
     }
@@ -68,8 +61,8 @@ public class FrogController {
 
         model.addAttribute("isNew", true);
         model.addAttribute("frog", new Frog());
-        model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
-        model.addAttribute("habitats", habitatRepository.findAll());
+        model.addAttribute("habitats", habitatService.getAllHabitats());
+        model.addAttribute("conservationStatuses", conservationStatusService.getAllConservationStatuses());
 
         return "frogs/create-or-edit";
     }
@@ -80,22 +73,22 @@ public class FrogController {
         if (bindingResult.hasErrors()) {
 
             model.addAttribute("isNew", true);
-            model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
-            model.addAttribute("habitats", habitatRepository.findAll());
+            model.addAttribute("habitats", habitatService.getAllHabitats());
+            model.addAttribute("conservationStatuses", conservationStatusService.getAllConservationStatuses());
             return "frogs/create-or-edit";
         }
 
-        frogRepository.save(formFrog);
+        frogService.saveFrog(formFrog);
         return "redirect:/frogs";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
 
-        model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
-        model.addAttribute("habitats", habitatRepository.findAll());
+        model.addAttribute("habitats", habitatService.getAllHabitats());
+        model.addAttribute("conservationStatuses", conservationStatusService.getAllConservationStatuses());
 
-        model.addAttribute("frog", frogRepository.findById(id).get());
+        model.addAttribute("frog", frogService.getFrogById(id));
         return "frogs/create-or-edit";
     }
 
@@ -103,19 +96,19 @@ public class FrogController {
     public String update(@Valid @ModelAttribute("frog") Frog formFrog, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("conservationStatuses", conservationStatusRepository.findAll());
-            model.addAttribute("habitats", habitatRepository.findAll());
+            model.addAttribute("habitats", habitatService.getAllHabitats());
+            model.addAttribute("conservationStatuses", conservationStatusService.getAllConservationStatuses());
             return "frogs/create-or-edit";
         }
 
-        frogRepository.save(formFrog);
+        frogService.saveFrog(formFrog);
         return "redirect:/frogs";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        frogRepository.deleteById(id);
+        frogService.deleteFrog(id);
         return "redirect:/frogs";
     }
 
