@@ -1,9 +1,8 @@
 package org.project.frogs.frogs_project_backoffice.controller;
 
-import org.project.frogs.frogs_project_backoffice.model.Frog;
 import org.project.frogs.frogs_project_backoffice.model.Habitat;
-import org.project.frogs.frogs_project_backoffice.repository.FrogRepository;
-import org.project.frogs.frogs_project_backoffice.repository.HabitatRepository;
+import org.project.frogs.frogs_project_backoffice.service.FrogService;
+import org.project.frogs.frogs_project_backoffice.service.HabitatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,15 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HabitatController {
 
     @Autowired
-    HabitatRepository habitatRepository;
+    HabitatService habitatService;
 
     @Autowired
-    FrogRepository frogRepository;
+    FrogService frogService;
 
     @GetMapping
     public String index(Model model) {
 
-        model.addAttribute("habitats", habitatRepository.findAll());
+        model.addAttribute("habitats", habitatService.getAllHabitats());
 
         return "habitats/index";
     }
@@ -38,8 +37,7 @@ public class HabitatController {
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
 
-        Habitat habitatDetails = habitatRepository.findById(id).get();
-        model.addAttribute("selectedHabitat", habitatDetails);
+        model.addAttribute("selectedHabitat", habitatService.getHabitatById(id));
 
         return "habitats/habitatDetails";
     }
@@ -60,11 +58,11 @@ public class HabitatController {
         if (bindingResult.hasErrors()) {
 
             model.addAttribute("isNew", true);
-            model.addAttribute("frogs", frogRepository.findAll());
+            model.addAttribute("frogs", frogService.getAllFrogs());
             return "habitats/create-or-edit";
         }
 
-        habitatRepository.save(formHabitat);
+        habitatService.saveHabitat(formHabitat);
 
         return "redirect:/habitats";
     }
@@ -72,7 +70,8 @@ public class HabitatController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
 
-        model.addAttribute("habitat", habitatRepository.findById(id).get());
+        model.addAttribute("habitat", habitatService.getHabitatById(id));
+
         return "habitats/create-or-edit";
     }
 
@@ -82,24 +81,18 @@ public class HabitatController {
 
         if (bindingResult.hasErrors()) {
 
-            model.addAttribute("frogs", frogRepository.findAll());
+            model.addAttribute("frogs", frogService.getAllFrogs());
             return "habitats/create-or-edit";
         }
 
-        habitatRepository.save(formHabitat);
+        habitatService.saveHabitat(formHabitat);
         return "redirect:/habitats";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        Habitat habitatToDelete = habitatRepository.findById(id).get();
-
-        for (Frog frog : habitatToDelete.getFrogs()) {
-            frog.getHabitats().remove(habitatToDelete);
-        }
-
-        habitatRepository.deleteById(id);
+        habitatService.deleteHabitat(id);
 
         return "redirect:/habitats";
     }
