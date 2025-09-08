@@ -54,11 +54,11 @@
                 <!-- pulsanti azioni -->
                 <div class="d-flex gap-2 mt-3 justify-content-center">
                     <a th:href="@{/conservationStatuses/edit/} + ${selectedConservationStatus.id}"
-                        class="btn btn-warning">Modifica</a>
+                        class="btn btn-warning" sec:authorize="hasAuthority('ADMIN')">Modifica</a>
 
                     <!-- pulsante trigger modale -->
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                        th:attr="data-bs-target='#deleteModal'">Elimina</button>
+                        th:attr="data-bs-target='#deleteModal'" sec:authorize="hasAuthority('ADMIN')">Elimina</button>
                 </div>
 
                 <!-- modale -->
