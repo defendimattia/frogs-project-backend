@@ -42,14 +42,18 @@
 
                     <dt class="col-sm-4">Habitat</dt>
                     <dd class="col-sm-8">
+
+                        <th:block>
+                            <span th:if="${#lists.isEmpty(selectedFrog.habitats)}">Nessun habitat assegnato</span>
+                        </th:block>
+
                         <span th:each="habitat, iter : ${selectedFrog.habitats}">
                             <span th:text="${iter.last} ? ${habitat.name} : ${habitat.name} + ','"></span>
                         </span>
                     </dd>
 
                     <dt class="col-sm-4">Conservazione</dt>
-                    <dd class="col-sm-8" th:text="${selectedFrog.conservationStatus.toString()}">
-                    </dd>
+                    <dd class="col-sm-8" th:text="${selectedFrog.conservationStatus}"></dd>
 
                     <dt class="col-sm-4">Descrizione</dt>
                     <dd class="col-sm-8" th:text="${selectedFrog.description}"></dd>
@@ -57,19 +61,21 @@
 
                 <!-- pulsanti azioni -->
                 <div class="d-flex gap-2 mt-3 justify-content-center">
-                    <a th:href="@{/frogs/edit/} + ${selectedFrog.id}" class="btn btn-warning"  sec:authorize="hasAuthority('ADMIN')">Modifica</a>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
-                            th:attr="data-bs-target='#deleteModal'"  sec:authorize="hasAuthority('ADMIN')">Elimina</button>
+                    <a th:href="@{/frogs/edit/} + ${selectedFrog.id}" class="btn btn-warning"
+                        sec:authorize="hasAuthority('ADMIN')">Modifica</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        th:attr="data-bs-target='#deleteModal'" sec:authorize="hasAuthority('ADMIN')">Elimina</button>
                 </div>
 
                 <!-- modale -->
-                <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" 
-                     tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="deleteModalLabel">Elimina</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body" th:text="|Eliminare '${selectedFrog.commonName}'?|"></div>
                             <div class="modal-footer">

@@ -61,7 +61,7 @@
                                         <td
                                             th:text="*{toxicity} == null ? 'Sconosciuta' : (*{toxicity} ? 'Tossica' : 'Non tossica')">
                                         </td>
-                                        <td th:text="*{conservationStatus.getIucnCode()}"></td>
+                                        <td th:text="*{conservationStatus} == null ? 'Non assegnato' : *{conservationStatus.getIucnCode()}"></td>
 
                                         <!-- pulsanti -->
                                         <td class="d-flex gap-1 justify-content-center flex-wrap">
