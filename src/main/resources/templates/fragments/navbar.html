@@ -1,28 +1,30 @@
 <th:block th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-success mb-4">
+        <div class="container-fluid">
+            <span class="navbar-brand">GreenFrog Backend</span>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <span class="navbar-brand mx-4">GreenFrog Backend</span>
-
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3" th:href="@{/}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3"
-                    th:href="@{/frogs}">Rane</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3"
-                    th:href="@{/habitats}">Habitats</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white text-decoration-none nav-link navbar-brand px-3"
-                    th:href="@{/conservationStatuses}">Stati di Conservazione</a>
-            </li>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 py-2 py-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white text-decoration-none nav-link navbar-brand" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white text-decoration-none nav-link navbar-brand" th:href="@{/frogs}">Rane</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white text-decoration-none nav-link navbar-brand" th:href="@{/habitats}">Habitats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white text-decoration-none nav-link navbar-brand" th:href="@{/conservationStatuses}">Stati di Conservazione</a>
+                    </li>
         </ul>
 
         <div class="ms-auto mx-4">
-            <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-3 text-white">
+            <div sec:authorize="isAuthenticated()" class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 text-white">
                 <div>
                     <small class="d-block">Utente:</small>
                     <strong th:text="${#authentication.name}"></strong>
