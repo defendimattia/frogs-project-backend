@@ -1,4 +1,4 @@
-package org.project.frogs.frogs_project_backoffice.model;
+package org.project.frogs.frogs_project_backend.model;
 
 import java.util.Set;
 

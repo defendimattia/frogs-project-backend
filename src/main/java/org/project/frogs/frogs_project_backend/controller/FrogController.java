@@ -1,9 +1,9 @@
-package org.project.frogs.frogs_project_backoffice.controller;
+package org.project.frogs.frogs_project_backend.controller;
 
-import org.project.frogs.frogs_project_backoffice.model.Frog;
-import org.project.frogs.frogs_project_backoffice.service.ConservationStatusService;
-import org.project.frogs.frogs_project_backoffice.service.FrogService;
-import org.project.frogs.frogs_project_backoffice.service.HabitatService;
+import org.project.frogs.frogs_project_backend.model.Frog;
+import org.project.frogs.frogs_project_backend.service.ConservationStatusService;
+import org.project.frogs.frogs_project_backend.service.FrogService;
+import org.project.frogs.frogs_project_backend.service.HabitatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,14 +1,14 @@
-package org.project.frogs.frogs_project_backoffice.service;
+package org.project.frogs.frogs_project_backend.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.project.frogs.frogs_project_backoffice.model.ConservationStatus;
-import org.project.frogs.frogs_project_backoffice.model.Frog;
-import org.project.frogs.frogs_project_backoffice.model.Habitat;
-import org.project.frogs.frogs_project_backoffice.repository.ConservationStatusRepository;
-import org.project.frogs.frogs_project_backoffice.repository.FrogRepository;
-import org.project.frogs.frogs_project_backoffice.repository.HabitatRepository;
+import org.project.frogs.frogs_project_backend.model.ConservationStatus;
+import org.project.frogs.frogs_project_backend.model.Frog;
+import org.project.frogs.frogs_project_backend.model.Habitat;
+import org.project.frogs.frogs_project_backend.repository.ConservationStatusRepository;
+import org.project.frogs.frogs_project_backend.repository.FrogRepository;
+import org.project.frogs.frogs_project_backend.repository.HabitatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package org.project.frogs.frogs_project_backoffice.controller;
+package org.project.frogs.frogs_project_backend.controller;
 
-import org.project.frogs.frogs_project_backoffice.model.ConservationStatus;
-import org.project.frogs.frogs_project_backoffice.service.ConservationStatusService;
+import org.project.frogs.frogs_project_backend.model.ConservationStatus;
+import org.project.frogs.frogs_project_backend.service.ConservationStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

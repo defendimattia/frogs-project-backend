@@ -1,10 +1,10 @@
-package org.project.frogs.frogs_project_backoffice.controller;
+package org.project.frogs.frogs_project_backend.controller;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.project.frogs.frogs_project_backoffice.model.Frog;
-import org.project.frogs.frogs_project_backoffice.service.FrogService;
+import org.project.frogs.frogs_project_backend.model.Frog;
+import org.project.frogs.frogs_project_backend.service.FrogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,31 +44,31 @@ public class FrogRestController {
         return new ResponseEntity<Frog>(frogTry.get(), HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<Frog> store(@Valid @RequestBody Frog frog) {
-        return new ResponseEntity<Frog>(frogService.saveFrog(frog), HttpStatus.CREATED);
-    }
+    // @PostMapping()
+    // public ResponseEntity<Frog> store(@Valid @RequestBody Frog frog) {
+    //     return new ResponseEntity<Frog>(frogService.saveFrog(frog), HttpStatus.CREATED);
+    // }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Frog> update(@Valid @RequestBody Frog frog, @PathVariable Integer id) {
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Frog> update(@Valid @RequestBody Frog frog, @PathVariable Integer id) {
 
-        if (frogService.findById(id).isEmpty()) {
-            return new ResponseEntity<Frog>(HttpStatus.NOT_FOUND);
-        }
+    //     if (frogService.findById(id).isEmpty()) {
+    //         return new ResponseEntity<Frog>(HttpStatus.NOT_FOUND);
+    //     }
 
-        frog.setId(id);
-        return new ResponseEntity<Frog>(frogService.saveFrog(frog), HttpStatus.OK);
-    }
+    //     frog.setId(id);
+    //     return new ResponseEntity<Frog>(frogService.saveFrog(frog), HttpStatus.OK);
+    // }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Frog> delete(@PathVariable Integer id) {
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Frog> delete(@PathVariable Integer id) {
 
-        if (frogService.findById(id).isEmpty()) {
-            return new ResponseEntity<Frog>(HttpStatus.NOT_FOUND);
-        }
+    //     if (frogService.findById(id).isEmpty()) {
+    //         return new ResponseEntity<Frog>(HttpStatus.NOT_FOUND);
+    //     }
 
-        frogService.deleteFrog(id);
-        return new ResponseEntity<Frog>(HttpStatus.NO_CONTENT);
-    }
+    //     frogService.deleteFrog(id);
+    //     return new ResponseEntity<Frog>(HttpStatus.NO_CONTENT);
+    // }
 
 }

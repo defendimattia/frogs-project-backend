@@ -1,4 +1,4 @@
-package org.project.frogs.frogs_project_backoffice.security;
+package org.project.frogs.frogs_project_backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

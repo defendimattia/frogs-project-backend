@@ -1,10 +1,10 @@
-package org.project.frogs.frogs_project_backoffice.security;
+package org.project.frogs.frogs_project_backend.security;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.project.frogs.frogs_project_backoffice.model.Role;
-import org.project.frogs.frogs_project_backoffice.model.User;
+import org.project.frogs.frogs_project_backend.model.Role;
+import org.project.frogs.frogs_project_backend.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

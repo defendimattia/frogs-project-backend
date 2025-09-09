@@ -1,9 +1,9 @@
-package org.project.frogs.frogs_project_backoffice.security;
+package org.project.frogs.frogs_project_backend.security;
 
 import java.util.Optional;
 
-import org.project.frogs.frogs_project_backoffice.model.User;
-import org.project.frogs.frogs_project_backoffice.repository.UserRepository;
+import org.project.frogs.frogs_project_backend.model.User;
+import org.project.frogs.frogs_project_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
