@@ -14,28 +14,34 @@ public class SecurityConfiguration {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/webjars/**").permitAll()
-                .requestMatchers("/frogs/create", "/frogs/edit").hasAnyAuthority("ADMIN")
-                .requestMatchers("/habitats/create", "/habitats/edit").hasAnyAuthority("ADMIN")
-                .requestMatchers("/conservationStatuses/create", "/conservationStatuses/edit").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
-                .hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
-                .hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PATCH, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
-                .hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
-                .hasAuthority("ADMIN")
-                .requestMatchers("/frogs", "frogs/**", "/habitats", "/habitats/**", "conservationStatuses",
-                        "/conservationStatuses/**")
-                .hasAnyAuthority("USER", "ADMIN")
-                .requestMatchers("/").hasAnyAuthority("USER", "ADMIN")
-                .requestMatchers("/login", "/logout").permitAll()
-                .anyRequest().denyAll())
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/webjars/**").permitAll()
+                        .requestMatchers("/api/frogs", "/api/frogs/**").permitAll()
+                        .requestMatchers("/api/habitats", "/api/habitats/**").permitAll()
+                        .requestMatchers("/api/conservationStatuses", "/api/conservationStatuses/**").permitAll()
+                        .requestMatchers("/frogs/create", "/frogs/edit").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/habitats/create", "/habitats/edit").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/conservationStatuses/create", "/conservationStatuses/edit")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/frogs/**", "/habitats/**", "/conservationStatuses/**")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers("/frogs", "frogs/**", "/habitats", "/habitats/**", "conservationStatuses",
+                                "/conservationStatuses/**")
+                        .hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/login", "/logout").permitAll()
+                        .anyRequest().denyAll())
                 .formLogin(form -> form.loginPage("/login").permitAll())
-                .logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll());
-
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll())
+                .httpBasic(httpBasic -> {
+                });
         return http.build();
     }
 
