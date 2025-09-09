@@ -31,6 +31,10 @@ public class ConservationStatusService {
         return statusTry.get();
     }
 
+    public Optional<ConservationStatus> findById(Integer id) {
+        return conservationStatusRepository.findById(id);
+    }
+
     public ConservationStatus saveConservationStatus(ConservationStatus conservationStatus) {
         return conservationStatusRepository.save(conservationStatus);
     }

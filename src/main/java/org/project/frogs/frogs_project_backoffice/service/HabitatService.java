@@ -34,6 +34,10 @@ public class HabitatService {
 
         return habitatTry.get();
     }
+    
+    public Optional<Habitat> findById(Integer id) {
+        return habitatRepository.findById(id);
+    }
 
     public Habitat saveHabitat(Habitat habitat) {
         return habitatRepository.save(habitat);

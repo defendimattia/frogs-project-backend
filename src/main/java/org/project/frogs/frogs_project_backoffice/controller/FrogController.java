@@ -87,7 +87,6 @@ public class FrogController {
 
         model.addAttribute("habitats", habitatService.getAllHabitats());
         model.addAttribute("conservationStatuses", conservationStatusService.getAllConservationStatuses());
-
         model.addAttribute("frog", frogService.getFrogById(id));
         return "frogs/create-or-edit";
     }

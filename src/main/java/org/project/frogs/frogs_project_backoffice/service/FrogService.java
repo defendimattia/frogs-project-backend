@@ -44,6 +44,10 @@ public class FrogService {
         return frogTry.get();
     }
 
+    public Optional<Frog> findById(Integer id) {
+        return frogRepository.findById(id);
+    }
+
     public Frog saveFrog(Frog frog) {
         return frogRepository.save(frog);
     }
