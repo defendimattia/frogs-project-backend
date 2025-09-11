@@ -15,7 +15,8 @@
         <div class="col-12 col-md-10 col-lg-8">
 
             <!-- bottone aggiungi -->
-            <a th:href="@{/habitats/create}" class="btn btn-success my-3"  sec:authorize="hasAuthority('ADMIN')">Aggiungi nuovo habitat</a>
+            <a th:href="@{/habitats/create}" class="btn btn-success my-3" sec:authorize="hasAuthority('ADMIN')">Aggiungi
+                nuovo habitat</a>
 
             <th:block th:if="${#lists.isEmpty(habitats)}">
                 <h1 class="h3">Non è presente nessun habitat</h1>
@@ -45,29 +46,40 @@
                                     <tr th:each="habitat : ${habitats}" th:object="${habitat}">
                                         <th scope="row" th:text="*{id}"></th>
                                         <td th:text="*{name}"></td>
-                                        <td th:text="*{description}"></td>
+                                        <td th:text="${#strings.length(habitat.description) > 70 ? #strings.substring(habitat.description,0,70) + '...' : habitat.description}"></td>
                                         <td th:text="*{#lists.size(frogs)}"></td>
 
                                         <!-- pulsanti -->
                                         <td class="d-flex gap-1 justify-content-center flex-wrap">
-                                            <a th:href="@{/habitats/} + *{id}" class="btn btn-sm btn-success">Dettagli</a>
-                                            <a th:href="@{/habitats/edit/} + *{id}" class="btn btn-sm btn-warning" sec:authorize="hasAuthority('ADMIN')">Modifica</a>
+                                            <a th:href="@{/habitats/} + *{id}"
+                                                class="btn btn-sm btn-success">Dettagli</a>
+                                            <a th:href="@{/habitats/edit/} + *{id}" class="btn btn-sm btn-warning"
+                                                sec:authorize="hasAuthority('ADMIN')">Modifica</a>
                                             <!-- pulsante trigger modale -->
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:attr="data-bs-target=|#staticBackdrop-*{id}|" sec:authorize="hasAuthority('ADMIN')">Elimina</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                th:attr="data-bs-target=|#staticBackdrop-*{id}|"
+                                                sec:authorize="hasAuthority('ADMIN')">Elimina</button>
 
                                             <!-- modale -->
-                                            <div class="modal fade" th:id="|staticBackdrop-*{id}|" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal fade" th:id="|staticBackdrop-*{id}|"
+                                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Elimina</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                                Elimina</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div th:text="|Eliminare '*{name}'?|" class="modal-body"></div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                                            <form th:action="@{/habitats/delete/{id}(id=*{id})}" method="post">
-                                                                <button class="btn btn-danger" type="submit" id="submitButton">Elimina</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Annulla</button>
+                                                            <form th:action="@{/habitats/delete/{id}(id=*{id})}"
+                                                                method="post">
+                                                                <button class="btn btn-danger" type="submit"
+                                                                    id="submitButton">Elimina</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -80,10 +92,10 @@
                             </table>
                         </div>
                     </div>
+                </div>
         </div>
-    </div>
 
-    <th:block th:replace="fragments/layout :: scripts" />
+        <th:block th:replace="fragments/layout :: scripts" />
 </body>
 
 </html>
