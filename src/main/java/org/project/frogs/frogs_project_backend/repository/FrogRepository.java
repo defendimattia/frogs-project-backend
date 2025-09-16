@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FrogRepository extends JpaRepository<Frog, Integer> {
 
     public List<Frog> findByCommonNameIgnoreCaseContainingOrScientificNameIgnoreCaseContaining(String commonName, String scientificName);
+    public List<Frog> findByHabitatsId(Integer habitatId);
+    public List<Frog> findByConservationStatusId(Integer statusId);
 }

@@ -81,4 +81,12 @@ public class FrogService {
     public List<ConservationStatus> getAllConservationStatuses() {
         return conservationStatusRepository.findAll();
     }
+
+    public List<Frog> findByHabitatId(Integer habitatId) {
+        return frogRepository.findByHabitatsId(habitatId);
+    }
+
+    public List<Frog> findByStatusId(Integer statusId) {
+        return frogRepository.findByConservationStatusId(statusId);
+    }
 }

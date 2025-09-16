@@ -47,9 +47,19 @@ public class FrogRestController {
         return new ResponseEntity<Frog>(frogTry.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchByName")
     public List<Frog> search(@RequestParam(name = "query") String query) {
         return frogService.searchFrogs(query);
+    }
+
+    @GetMapping("/searchByHabitat/{habitatId}")
+    public List<Frog> getByHabitat(@PathVariable Integer habitatId) {
+        return frogService.findByHabitatId(habitatId);
+    }
+
+    @GetMapping("/searchByStatus/{statusId}")
+    public List<Frog> getByStatus(@PathVariable Integer statusId) {
+        return frogService.findByStatusId(statusId);
     }
 
     // @PostMapping()
