@@ -15,7 +15,8 @@
         <div class="col-12 col-md-10 col-lg-8">
 
             <!-- bottone aggiungi -->
-            <a th:href="@{/frogs/create}" class="btn btn-success my-3" sec:authorize="hasAuthority('ADMIN')">Aggiungi nuova rana</a>
+            <a th:href="@{/frogs/create}" class="btn btn-success my-3" sec:authorize="hasAuthority('ADMIN')">Aggiungi
+                nuova rana</a>
 
             <th:block th:if="${#lists.isEmpty(frogs)}">
                 <h1 class="h3">Non è presente nessuna rana</h1>
@@ -42,10 +43,10 @@
                                         <th scope="col">id</th>
                                         <th scope="col">nome comune</th>
                                         <th scope="col">nome scientifico</th>
-                                        <th scope="col">colore</th>
-                                        <th scope="col">peso medio(g)</th>
-                                        <th scope="col">tossicità</th>
-                                        <th scope="col">stato di conservazione</th>
+                                        <th scope="col" class="d-none d-md-table-cell">colore</th>
+                                        <th scope="col" class="d-none d-md-table-cell">peso medio(g)</th>
+                                        <th scope="col" class="d-none d-md-table-cell">tossicità</th>
+                                        <th scope="col" class="d-none d-md-table-cell">stato di conservazione</th>
 
                                         <!-- colonne pulsanti -->
                                         <th scope="col" class="col-auto text-nowrap"></th>
@@ -56,19 +57,24 @@
                                         <th scope="row" th:text="*{id}"></th>
                                         <td th:text="*{commonName}"></td>
                                         <td th:text="*{scientificName}"></td>
-                                        <td th:text="*{color}"></td>
-                                        <td th:text="*{averageWeight}"></td>
-                                        <td
-                                            th:text="*{toxicity} == null ? 'Sconosciuta' : (*{toxicity} ? 'Tossica' : 'Non tossica')">
+                                        <td th:text="*{color}" class="d-none d-md-table-cell"></td>
+                                        <td th:text="*{averageWeight}" class="d-none d-md-table-cell"></td>
+                                        <td th:text="*{toxicity} == null ? 'Sconosciuta' : (*{toxicity} ? 'Tossica' : 'Non tossica')"
+                                            class="d-none d-md-table-cell">
                                         </td>
-                                        <td th:text="*{conservationStatus} == null ? 'Non assegnato' : *{conservationStatus.getIucnCode()}"></td>
+                                        <td th:text="*{conservationStatus} == null ? 'Non assegnato' : *{conservationStatus.getIucnCode()}"
+                                            class="d-none d-md-table-cell">
+                                        </td>
 
                                         <!-- pulsanti -->
                                         <td class="d-flex gap-1 justify-content-center flex-wrap">
                                             <a th:href="@{/frogs/} + *{id}" class="btn btn-sm btn-success">Dettagli</a>
-                                            <a th:href="@{/frogs/edit/} + *{id}" class="btn btn-sm btn-warning" sec:authorize="hasAuthority('ADMIN')">Modifica</a>
+                                            <a th:href="@{/frogs/edit/} + *{id}" class="btn btn-sm btn-warning"
+                                                sec:authorize="hasAuthority('ADMIN')">Modifica</a>
                                             <!-- pulsante trigger modale -->
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:attr="data-bs-target=|#staticBackdrop-*{id}|" sec:authorize="hasAuthority('ADMIN')">Elimina</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                th:attr="data-bs-target=|#staticBackdrop-*{id}|"
+                                                sec:authorize="hasAuthority('ADMIN')">Elimina</button>
 
                                             <!-- modale -->
                                             <div class="modal fade" th:id="|staticBackdrop-*{id}|"
@@ -83,8 +89,7 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <div th:text="|Eliminare '*{commonName}'?|"
-                                                            class="modal-body">
+                                                        <div th:text="|Eliminare '*{commonName}'?|" class="modal-body">
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
