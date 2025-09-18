@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.project.frogs.frogs_project_backend.model.Frog;
 import org.project.frogs.frogs_project_backend.service.FrogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,8 +32,8 @@ public class FrogRestController {
     private FrogService frogService;
 
     @GetMapping
-    public List<Frog> index() {
-        List<Frog> frogs = frogService.getAllFrogs();
+    public Page<Frog> index(Pageable pageable) {
+        Page<Frog> frogs = frogService.getAllFrogs(pageable);
         return frogs;
     }
 
@@ -48,18 +50,18 @@ public class FrogRestController {
     }
 
     @GetMapping("/searchByName")
-    public List<Frog> search(@RequestParam(name = "query") String query) {
-        return frogService.searchFrogs(query);
+    public Page<Frog> search(@RequestParam(name = "query") String query, Pageable pageable) {
+        return frogService.searchFrogs(query, pageable);
     }
 
     @GetMapping("/searchByHabitat/{habitatId}")
-    public List<Frog> getByHabitat(@PathVariable Integer habitatId) {
-        return frogService.findByHabitatId(habitatId);
+    public Page<Frog> getByHabitat(@PathVariable Integer habitatId, Pageable pageable) {
+        return frogService.findByHabitatId(habitatId, pageable);
     }
 
     @GetMapping("/searchByStatus/{statusId}")
-    public List<Frog> getByStatus(@PathVariable Integer statusId) {
-        return frogService.findByStatusId(statusId);
+    public Page<Frog> getByStatus(@PathVariable Integer statusId, Pageable pageable) {
+        return frogService.findByStatusId(statusId, pageable);
     }
 
     // @PostMapping()
