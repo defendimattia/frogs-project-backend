@@ -66,7 +66,7 @@ public class ConservationStatusController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
 
-        model.addAttribute("selectedConservationStatus", conservationStatusService.getConservationStatusById(id));
+        model.addAttribute("conservationStatus", conservationStatusService.getConservationStatusById(id));
 
         return "conservationStatuses/create-or-edit";
     }
