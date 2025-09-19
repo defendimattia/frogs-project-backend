@@ -11,32 +11,34 @@
     <!-- Navbar -->
     <th:block th:replace="~{fragments/navbar :: navbar}" />
 
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-md-10 col-lg-8">
+    <div class="container-fluid px-3">
 
-            <!-- bottone aggiungi -->
-            <a th:href="@{/frogs/create}" class="btn btn-success my-3" sec:authorize="hasAuthority('ADMIN')">Aggiungi
-                nuova rana</a>
+        <div class="row justify-content-center mb-3">
+            <div class="col-12 col-md-10 col-lg-8">
 
-            <th:block th:if="${#lists.isEmpty(frogs)}">
-                <h1 class="h3">Non è presente nessuna rana</h1>
-            </th:block>
+                <!-- bottone aggiungi -->
+                <a th:href="@{/frogs/create}" class="btn btn-success my-3"
+                    sec:authorize="hasAuthority('ADMIN')">Aggiungi
+                    nuova rana</a>
 
-            <th:block th:unless="${#lists.isEmpty(frogs)}">
-                <!-- barra di ricerca -->
-                <form th:action="@{/frogs/search}" method="get" class="d-flex">
-                    <input type="text" name="query" class="form-control me-2"
-                        placeholder="Cerca rana per nome comune o scientifico" th:value="${query}">
-                    <button class="btn btn-success" type="submit">Cerca</button>
-                </form>
+                <th:block th:if="${#lists.isEmpty(frogs)}">
+                    <h1 class="h3">Non è presente nessuna rana</h1>
+                </th:block>
 
-                <!-- tabella rane -->
-                <div class="card border-success mt-3">
-                    <div class="card-header bg-success text-white text-center">
-                        Elenco rane
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
+                <th:block th:unless="${#lists.isEmpty(frogs)}">
+                    <!-- barra di ricerca -->
+                    <form th:action="@{/frogs/search}" method="get" class="d-flex">
+                        <input type="text" name="query" class="form-control me-2"
+                            placeholder="Cerca rana per nome comune o scientifico" th:value="${query}">
+                        <button class="btn btn-success" type="submit">Cerca</button>
+                    </form>
+
+                    <!-- tabella rane -->
+                    <div class="card border-success mt-3">
+                        <div class="card-header bg-success text-white text-center">
+                            Elenco rane
+                        </div>
+                        <div class="card-body p-0">
                             <table class="table table-striped mb-0 align-middle">
                                 <thead class="table-success">
                                     <tr>
@@ -46,7 +48,7 @@
                                         <th scope="col" class="d-none d-md-table-cell">colore</th>
                                         <th scope="col" class="d-none d-md-table-cell">peso medio(g)</th>
                                         <th scope="col" class="d-none d-md-table-cell">tossicità</th>
-                                        <th scope="col" class="d-none d-md-table-cell">stato di conservazione</th>
+                                        <th scope="col" class="d-none d-xl-table-cell">stato di conservazione</th>
 
                                         <!-- colonne pulsanti -->
                                         <th scope="col" class="col-auto text-nowrap"></th>
@@ -63,19 +65,25 @@
                                             class="d-none d-md-table-cell">
                                         </td>
                                         <td th:text="*{conservationStatus} == null ? 'Non assegnato' : *{conservationStatus.getIucnCode()}"
-                                            class="d-none d-md-table-cell">
+                                            class="d-none d-xl-table-cell">
                                         </td>
 
                                         <!-- pulsanti -->
-                                        <td class="d-flex gap-1 justify-content-center flex-wrap">
-                                            <a th:href="@{/frogs/} + *{id}" class="btn btn-sm btn-success">Dettagli</a>
-                                            <a th:href="@{/frogs/edit/} + *{id}" class="btn btn-sm btn-warning"
-                                                sec:authorize="hasAuthority('ADMIN')">Modifica</a>
-                                            <!-- pulsante trigger modale -->
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=|#staticBackdrop-*{id}|"
-                                                sec:authorize="hasAuthority('ADMIN')">Elimina</button>
-
+                                        <td class="align-middle">
+                                            <div
+                                                class="d-flex justify-content-center align-items-center gap-1">
+                                                <a th:href="@{/frogs/} + *{id}"
+                                                    class="btn btn-sm btn-success">Dettagli</a>
+                                                <a th:href="@{/frogs/edit/} + *{id}"
+                                                    class="btn btn-sm btn-warning d-none d-xl-table-cell"
+                                                    sec:authorize="hasAuthority('ADMIN')">Modifica</a>
+                                                <!-- pulsante trigger modale -->
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm d-none d-xl-table-cell"
+                                                    data-bs-toggle="modal"
+                                                    th:attr="data-bs-target=|#staticBackdrop-*{id}|"
+                                                    sec:authorize="hasAuthority('ADMIN')">Elimina</button>
+                                            </div>
                                             <!-- modale -->
                                             <div class="modal fade" th:id="|staticBackdrop-*{id}|"
                                                 data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -111,10 +119,12 @@
                             </table>
                         </div>
                     </div>
-                </div>
-            </th:block>
+                </th:block>
+            </div>
         </div>
+
     </div>
+
 
     <th:block th:replace="fragments/layout :: scripts" />
 </body>

@@ -11,25 +11,27 @@
     <!-- Navbar -->
     <th:block th:replace="~{fragments/navbar :: navbar}" />
 
-    <div class="row justify-content-center mb-3">
-        <div class="col-12 col-md-10 col-lg-8">
+    <div class="container-fluid px-3">
 
-            <!-- bottone aggiungi -->
-            <a th:href="@{/conservationStatuses/create}" class="btn btn-success my-3"  sec:authorize="hasAuthority('ADMIN')">Aggiungi nuovo stato di
-                conservazione</a>
+        <div class="row justify-content-center mb-3">
+            <div class="col-12 col-md-10 col-lg-8">
 
-            <th:block th:if="${#lists.isEmpty(conservationStatuses)}">
-                <h1 class="h3">Non è presente nessuno stato di conservazione</h1>
-            </th:block>
+                <!-- bottone aggiungi -->
+                <a th:href="@{/conservationStatuses/create}" class="btn btn-success my-3"
+                    sec:authorize="hasAuthority('ADMIN')">Aggiungi nuovo stato di
+                    conservazione</a>
 
-            <th:block th:unless="${#lists.isEmpty(conservationStatuses)}">
-                <!-- tabella habitats -->
-                <div class="card border-success mt-3">
-                    <div class="card-header bg-success text-white text-center">
-                        Elenco stati di conservazione
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
+                <th:block th:if="${#lists.isEmpty(conservationStatuses)}">
+                    <h1 class="h3">Non è presente nessuno stato di conservazione</h1>
+                </th:block>
+
+                <th:block th:unless="${#lists.isEmpty(conservationStatuses)}">
+                    <!-- tabella status -->
+                    <div class="card border-success mt-3">
+                        <div class="card-header bg-success text-white text-center">
+                            Elenco stati di conservazione
+                        </div>
+                        <div class="card-body p-0">
                             <table class="table table-striped mb-0 align-middle">
                                 <thead class="table-success">
                                     <tr>
@@ -37,8 +39,8 @@
                                         <th scope="col">tipo</th>
                                         <th scope="col">descrizione</th>
                                         <th scope="col">IUCN code</th>
-                                        <th scope="col">livello di rischio</th>
-                                        <th scope="col">n° rane</th>
+                                        <th scope="col" class="d-none d-md-table-cell">livello di rischio</th>
+                                        <th scope="col" class="d-none d-md-table-cell">n° rane</th>
 
                                         <!-- colonne pulsanti -->
                                         <th scope="col" class="col-auto text-nowrap"></th>
@@ -48,30 +50,49 @@
                                     <tr th:each="status : ${conservationStatuses}" th:object="${status}">
                                         <th scope="row" th:text="*{id}"></th>
                                         <td th:text="*{type}"></td>
-                                        <td th:text="*{description}"></td>
+                                        <td th:text="*{description}" class="text-break"></td>
                                         <td th:text="*{iucnCode}"></td>
-                                        <td th:text="*{riskLevel}"></td>
-                                        <td th:text="*{#lists.size(frogs)}"></td>
+                                        <td th:text="*{riskLevel}" class="d-none d-md-table-cell"></td>
+                                        <td th:text="*{#lists.size(frogs)}" class="d-none d-md-table-cell"></td>
                                         <!-- pulsanti -->
-                                        <td class="d-flex gap-1 justify-content-center flex-wrap">
-                                            <a th:href="@{/conservationStatuses/} + *{id}" class="btn btn-sm btn-success">Dettagli</a>
-                                            <a th:href="@{/conservationStatuses/edit/} + *{id}" class="btn btn-sm btn-warning" sec:authorize="hasAuthority('ADMIN')">Modifica</a>
-                                            <!-- pulsante trigger modale -->
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:attr="data-bs-target=|#staticBackdrop-*{id}|" sec:authorize="hasAuthority('ADMIN')">Elimina</button>
+                                        <td class="align-middle">
+                                            <div
+                                                class="d-flex justify-content-center align-items-center gap-1 flex-wrap">
+                                                <a th:href="@{/conservationStatuses/} + *{id}"
+                                                    class="btn btn-sm btn-success">Dettagli</a>
+                                                <a th:href="@{/conservationStatuses/edit/} + *{id}"
+                                                    class="btn btn-sm btn-warning d-none d-md-table-cell"
+                                                    sec:authorize="hasAuthority('ADMIN')">Modifica</a>
+                                                <!-- pulsante trigger modale -->
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm d-none d-md-table-cell"
+                                                    data-bs-toggle="modal"
+                                                    th:attr="data-bs-target=|#staticBackdrop-*{id}|"
+                                                    sec:authorize="hasAuthority('ADMIN')">Elimina</button>
+                                            </div>
 
                                             <!-- modale -->
-                                            <div class="modal fade" th:id="|staticBackdrop-*{id}|" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal fade" th:id="|staticBackdrop-*{id}|"
+                                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Elimina</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                                Elimina
+                                                            </h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div th:text="|Eliminare '*{type}'?|" class="modal-body"></div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                                            <form th:action="@{/conservationStatuses/delete/{id}(id=*{id})}" method="post">
-                                                                <button class="btn btn-danger" type="submit" id="submitButton">Elimina</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Annulla</button>
+                                                            <form
+                                                                th:action="@{/conservationStatuses/delete/{id}(id=*{id})}"
+                                                                method="post">
+                                                                <button class="btn btn-danger" type="submit"
+                                                                    id="submitButton">Elimina</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -84,9 +105,12 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </th:block>
+            </div>
         </div>
+
     </div>
+
 
     <th:block th:replace="fragments/layout :: scripts" />
 </body>
